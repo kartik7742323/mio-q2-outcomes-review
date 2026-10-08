@@ -1,0 +1,876 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Q2 Outcomes Review — Mio AI Voice</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#171735; --ink-soft:#4a4a6a; --muted:#8a8aa5;
+    --accent:#6C2BD9; --accent-2:#9b5de5; --accent-soft:#efe7fb;
+    --green:#16a34a; --amber:#f59e0b; --red:#dc2626;
+    --line:#e7e7f0; --bg:#0e0e1a; --card:#f7f7fb;
+    --sans:'Segoe UI',system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%;background:var(--bg);font-family:var(--sans);color:var(--ink);overflow:hidden}
+  .stage{position:absolute;top:50%;left:50%;width:1280px;height:720px;transform:translate(-50%,-50%);transform-origin:center center}
+  .slide{position:absolute;inset:0;background:#fff;padding:52px 64px;display:none;flex-direction:column;border-radius:6px;overflow:hidden}
+  .slide.active{display:flex}
+
+  .eyebrow{font-size:14px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+  .eyebrow .sub{color:var(--muted);text-transform:none;letter-spacing:0;font-weight:600;margin-left:8px}
+  h1.title{font-size:33px;line-height:1.1;margin:5px 0 0;font-weight:800;letter-spacing:-.01em}
+  .rule{height:4px;width:60px;background:var(--accent);border-radius:3px;margin:14px 0 20px}
+
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:24px;flex:1;min-height:0}
+  .grid2.wide{grid-template-columns:1.15fr .85fr}
+  .grid2.story{grid-template-columns:1fr 1fr}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;flex:1;min-height:0}
+  .col{display:flex;flex-direction:column;gap:14px;min-height:0}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px;min-height:0}
+  .card h3{margin:0 0 10px;font-size:16px;font-weight:800;display:flex;align-items:center;gap:8px}
+  .card h3 .dot{width:9px;height:9px;border-radius:50%;background:var(--accent);flex:none}
+  .card.lbl h3{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+
+  ul.clean{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:9px}
+  ul.clean li{position:relative;padding-left:24px;font-size:15.5px;line-height:1.38;color:var(--ink-soft)}
+  ul.clean li::before{content:"";position:absolute;left:5px;top:8px;width:7px;height:7px;border-radius:2px;background:var(--accent);transform:rotate(45deg)}
+  ul.clean li b{color:var(--ink)}
+  ul.check li::before{content:"✓";background:none;color:var(--green);font-weight:900;left:1px;top:-1px;width:auto;height:auto;transform:none}
+  ul.warn li::before{content:"!";background:none;color:var(--amber);font-weight:900;left:4px;top:-1px;width:auto;height:auto;transform:none;font-size:17px}
+
+  .kpis{display:flex;gap:14px;flex-wrap:wrap}
+  .kpi{flex:1;min-width:120px;background:#fff;border:1px solid var(--line);border-radius:13px;padding:14px 16px}
+  .kpi .n{font-size:32px;font-weight:800;letter-spacing:-.02em;line-height:1}
+  .kpi .l{font-size:12.5px;color:var(--muted);margin-top:6px;font-weight:600;line-height:1.25}
+  .kpi.accent{background:var(--accent);border-color:var(--accent)}
+  .kpi.accent .n,.kpi.accent .l{color:#fff}
+  .kpi.mini .n{font-size:26px}
+
+  /* impact outcome hero */
+  .outcome{flex:1;background:linear-gradient(135deg,#3d1a7a,#6C2BD9);border:none;border-radius:14px;padding:22px 24px;display:flex;flex-direction:column;justify-content:center;color:#fff}
+  .outcome .lbl{font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#cdb8f2}
+  .outcome .big{font-size:46px;font-weight:800;letter-spacing:-.02em;line-height:1.02;margin-top:8px}
+  .outcome .sub{font-size:15px;color:#e6ddf8;margin-top:10px;line-height:1.35}
+
+  .pill{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;padding:3px 9px;border-radius:6px;background:var(--accent-soft);color:var(--accent);white-space:nowrap}
+  .tag-green{background:#e8f6ee;color:#0f7a37}.tag-amber{background:#fdf3e0;color:#a8670a}.tag-red{background:#fdeaea;color:#b21f1f}.tag-gray{background:#eef;color:#5a5a7a}
+
+  table.tbl{width:100%;border-collapse:collapse;font-size:14px}
+  table.tbl th{text-align:left;font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);padding:7px 10px;border-bottom:2px solid var(--line)}
+  table.tbl td{padding:8px 10px;border-bottom:1px solid var(--line);color:var(--ink-soft);vertical-align:top}
+  table.tbl td b{color:var(--ink)}
+  table.tbl tr:last-child td{border-bottom:none}
+  table.tbl td.num{font-weight:800;color:var(--ink);font-size:15px}
+
+  .note{font-size:12.5px;color:var(--muted);margin-top:auto;padding-top:10px}
+  .tbc{color:var(--amber);font-weight:800}
+  .chartwrap{flex:1;display:flex;flex-direction:column;min-height:0}
+  .chartwrap svg{width:100%;height:100%}
+  .legend{display:flex;gap:18px;font-size:13px;color:var(--ink-soft);margin-top:6px;flex-wrap:wrap}
+  .legend span{display:inline-flex;align-items:center;gap:6px}
+  .legend i{width:11px;height:11px;border-radius:3px;display:inline-block}
+
+  .cover{background:linear-gradient(135deg,#1a1140 0%,#3d1a7a 55%,#6C2BD9 100%);color:#fff;justify-content:center;padding:72px}
+  .cover .eyebrow{color:#c9b3f0}
+  .cover h1{font-size:56px;line-height:1.04;margin:12px 0 0;font-weight:800;letter-spacing:-.02em}
+  .cover .sub{font-size:22px;color:#d9ccf5;margin-top:18px;font-weight:500}
+  .cover .meta{display:flex;gap:38px;margin-top:48px;font-size:16px;color:#e6ddf8}
+  .cover .meta b{display:block;font-size:12px;color:#a893d8;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:5px}
+  .cover .logo{font-weight:900;letter-spacing:-.02em;font-size:20px}
+  .cover .glow{position:absolute;width:500px;height:500px;border-radius:50%;right:-120px;top:-160px;background:radial-gradient(circle,rgba(155,93,229,.55),transparent 70%)}
+
+  .agenda-list{display:grid;grid-template-columns:1fr 1fr;gap:13px 36px;flex:1;align-content:center}
+  .agenda-list .it{display:flex;gap:14px;align-items:center;font-size:17px;color:var(--ink-soft);font-weight:600}
+  .agenda-list .it .num{width:34px;height:34px;border-radius:9px;background:var(--accent-soft);color:var(--accent);font-weight:800;display:flex;align-items:center;justify-content:center;font-size:14px;flex:none}
+
+  .closing{background:linear-gradient(135deg,#1a1140,#3d1a7a);color:#fff;justify-content:center;align-items:center;text-align:center}
+  .closing h1{font-size:50px;font-weight:800;margin:0}
+  .closing p{font-size:19px;color:#d9ccf5;margin-top:14px}
+
+  .chrome{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:12px;z-index:50;background:rgba(255,255,255,.08);backdrop-filter:blur(6px);padding:7px 11px;border-radius:999px}
+  .chrome button{border:none;background:rgba(255,255,255,.14);color:#fff;width:32px;height:32px;border-radius:50%;font-size:15px;cursor:pointer;transition:.15s}
+  .chrome button:hover{background:var(--accent)}
+  .chrome .count{color:#cfcfe6;font-size:13px;font-weight:700;min-width:54px;text-align:center}
+  .progress{position:fixed;top:0;left:0;height:3px;background:var(--accent-2);z-index:60;transition:width .25s}
+  .hint{position:fixed;bottom:18px;right:20px;color:#6b6b86;font-size:12px;z-index:50}
+
+  /* info buttons + popups */
+  .info{position:relative;display:inline-flex;vertical-align:middle;margin:0 3px}
+  .info .ibtn{width:15px;height:15px;border-radius:50%;border:none;background:var(--accent-2);color:#fff;font-size:10px;font-weight:800;font-style:italic;cursor:pointer;padding:0;line-height:15px;display:inline-flex;align-items:center;justify-content:center}
+  .info .ibtn:hover{background:var(--accent)}
+  .info .pop{display:none;position:absolute;left:0;top:20px;z-index:200;width:265px;background:#fff;border:1px solid var(--line);box-shadow:0 12px 34px rgba(20,20,40,.2);border-radius:11px;padding:11px 13px;font-size:11.5px;line-height:1.4;color:var(--ink-soft);font-weight:500;text-transform:none;letter-spacing:normal;white-space:normal}
+  .info .pop.left{left:auto;right:0}
+  .info .pop.up{top:auto;bottom:20px}
+  .info .pop h4{margin:0 0 6px;font-size:11.5px;font-weight:800;color:var(--ink);text-transform:none}
+  .info .pop ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:3px}
+  .info .pop li{padding-left:12px;position:relative}
+  .info .pop li::before{content:"•";position:absolute;left:0;color:var(--accent);font-weight:800}
+  .info .pop .fn{margin-top:6px;color:var(--muted);font-size:11px}
+  .info:hover .pop,.info.open .pop{display:block}
+
+  @media print{
+    html,body{overflow:visible;background:#fff}
+    .chrome,.progress,.hint{display:none}
+    .stage{position:static;transform:none!important;width:1280px;height:auto}
+    .slide{display:flex!important;page-break-after:always;height:720px;border-radius:0;border:1px solid #eee}
+  }
+
+  .tick{color:var(--green);font-weight:900;font-size:18px;text-align:center}
+  table.tbl td.c,table.tbl th.c{text-align:center}
+  .bar{height:16px;border-radius:5px;display:inline-block;vertical-align:middle}
+  .barrow{display:flex;align-items:center;gap:10px;margin:7px 0;font-size:14px;color:var(--ink-soft)}
+  .barrow .lab{width:104px;font-weight:700;color:var(--ink)}
+  .barrow .v{font-weight:800;color:var(--ink);min-width:26px}
+  .src{font-size:12px;color:var(--muted);margin-top:auto;padding-top:8px}
+  table.tbl.big{font-size:16.5px}
+  table.tbl.big td{padding:15px 12px}
+  table.tbl.big th{font-size:12px;padding:10px 12px}
+  table.tbl.sm{font-size:12px;table-layout:fixed}
+  table.tbl.sm td,table.tbl.sm th{padding:5px 3px}
+  table.tbl.sm td.nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--ink);font-weight:600}
+  table.tbl.sm td.r,table.tbl.sm th.r{text-align:right}
+
+  /* ===== Aurora theme (Q2) ===== */
+  :root{
+    --ink:#F5F3FF; --ink-soft:#CBC8EA; --muted:#8F8CB9;
+    --accent:#8B5CF6; --accent-2:#22D3EE; --accent-soft:rgba(139,92,246,.16);
+    --green:#34D399; --amber:#FBBF24; --red:#FB7185;
+    --line:rgba(255,255,255,.09); --bg:#05040f; --card:rgba(255,255,255,.04);
+    --sans:'Inter','Segoe UI',system-ui,-apple-system,Roboto,Arial,sans-serif;
+    --display:'Plus Jakarta Sans','Inter','Segoe UI',system-ui,sans-serif;
+    --grad:linear-gradient(90deg,#A78BFA 0%,#818CF8 45%,#22D3EE 100%);
+  }
+  html,body{background:radial-gradient(1200px 700px at 50% 50%,#0c0a22 0%,#05040f 70%);-webkit-font-smoothing:antialiased}
+  .slide{background:
+      radial-gradient(820px 460px at 104% -12%,rgba(124,58,237,.30),transparent 62%),
+      radial-gradient(640px 380px at -8% 112%,rgba(34,211,238,.13),transparent 60%),
+      linear-gradient(180deg,#0e0c27 0%,#0a0920 100%);
+    border-radius:18px;border:1px solid rgba(255,255,255,.07);
+    box-shadow:0 40px 120px -30px rgba(0,0,0,.9),0 0 0 1px rgba(139,92,246,.06);
+    color:var(--ink);padding:48px 64px 54px}
+  .slide::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:0;
+    background-image:linear-gradient(rgba(255,255,255,.028) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.028) 1px,transparent 1px);
+    background-size:44px 44px;-webkit-mask-image:radial-gradient(ellipse at 70% 0%,#000 0%,transparent 70%);mask-image:radial-gradient(ellipse at 70% 0%,#000 0%,transparent 70%)}
+  .slide > *:not(.glow){position:relative;z-index:1}
+
+  .eyebrow{align-self:flex-start;display:inline-flex;align-items:center;gap:9px;font-size:11.5px;font-weight:700;letter-spacing:.16em;
+    color:#C4B5FD;background:rgba(139,92,246,.10);border:1px solid rgba(167,139,250,.28);padding:6px 13px 6px 11px;border-radius:999px}
+  .eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--grad);box-shadow:0 0 10px rgba(34,211,238,.8)}
+  h1.title{font-family:var(--display);font-size:35px;font-weight:800;letter-spacing:-.025em;margin-top:14px;color:#fff}
+  .rule{height:3px;width:84px;background:var(--grad);margin:14px 0 22px;box-shadow:0 0 18px rgba(139,92,246,.7)}
+
+  .card{background:linear-gradient(180deg,rgba(255,255,255,.065),rgba(255,255,255,.025));border:1px solid rgba(255,255,255,.085);
+    border-radius:16px;box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 24px 48px -28px rgba(0,0,0,.7);
+    transition:transform .25s ease,border-color .25s ease}
+  .card:hover{transform:translateY(-2px);border-color:rgba(167,139,250,.32)}
+  .card h3{font-family:var(--display);font-weight:700;color:#fff;letter-spacing:-.005em}
+  .card h3 .dot{box-shadow:0 0 0 4px rgba(255,255,255,.05),0 0 12px rgba(139,92,246,.55)}
+
+  ul.clean li{color:var(--ink-soft)}
+  ul.clean li b{color:#fff}
+  ul.clean li::before{background:var(--grad);border-radius:2px}
+  ul.check li::before{color:var(--green);background:none;text-shadow:0 0 10px rgba(52,211,153,.6)}
+  ul.warn li::before{color:var(--amber);background:none;text-shadow:0 0 10px rgba(251,191,36,.5)}
+
+  .kpi{background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.025));border:1px solid rgba(255,255,255,.09);border-radius:16px;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.07)}
+  .kpi .n{font-family:var(--display);font-weight:800;letter-spacing:-.03em;background:linear-gradient(180deg,#fff 20%,#C4B5FD 120%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;font-variant-numeric:tabular-nums}
+  .kpi .l{color:var(--muted)}
+  .kpi.accent{background:linear-gradient(135deg,#6D28D9 0%,#7C3AED 45%,#0891B2 140%);border-color:rgba(196,181,253,.45);
+    box-shadow:0 18px 40px -16px rgba(124,58,237,.75),inset 0 1px 0 rgba(255,255,255,.25)}
+  .kpi.accent .n{background:none;color:#fff;-webkit-text-fill-color:#fff}
+  .kpi.accent .l{color:#E9E3FF}
+
+  .outcome{position:relative;overflow:hidden;background:
+      radial-gradient(420px 260px at 110% 120%,rgba(34,211,238,.45),transparent 60%),
+      linear-gradient(140deg,#4C1D95 0%,#6D28D9 50%,#7C3AED 100%);
+    border:1px solid rgba(196,181,253,.35);border-radius:18px;box-shadow:0 30px 70px -24px rgba(124,58,237,.75),inset 0 1px 0 rgba(255,255,255,.22)}
+  .outcome::before{content:"";position:absolute;width:260px;height:260px;right:-80px;top:-100px;border-radius:50%;
+    background:radial-gradient(circle,rgba(255,255,255,.22),transparent 65%)}
+  .outcome > *{position:relative}
+  .outcome .lbl{color:#DDD6FE;letter-spacing:.18em}
+  .outcome .big{font-family:var(--display);font-size:62px;letter-spacing:-.035em;
+    background:linear-gradient(180deg,#fff 30%,#A5F3FC 130%);-webkit-background-clip:text;background-clip:text;color:transparent;font-variant-numeric:tabular-nums}
+  .outcome .sub{color:#EDE9FE}
+
+  .pill{border:1px solid transparent;letter-spacing:.06em}
+  .tag-green{background:rgba(52,211,153,.13);color:#6EE7B7;border-color:rgba(52,211,153,.35)}
+  .tag-amber{background:rgba(251,191,36,.13);color:#FCD34D;border-color:rgba(251,191,36,.35)}
+  .tag-red{background:rgba(251,113,133,.14);color:#FDA4AF;border-color:rgba(251,113,133,.38)}
+  .tag-gray{background:rgba(255,255,255,.07);color:#D4D2EE;border-color:rgba(255,255,255,.16)}
+
+  table.tbl th{color:#A5A2D0;border-bottom:1px solid rgba(167,139,250,.30)}
+  table.tbl td{color:var(--ink-soft);border-bottom:1px solid rgba(255,255,255,.06)}
+  table.tbl td b,table.tbl td.num{color:#fff}
+  table.tbl tr:hover td{background:rgba(139,92,246,.07)}
+
+  .bar{border-radius:999px}
+  .bar[style*="var(--accent)"]{background:linear-gradient(90deg,#7C3AED,#818CF8 55%,#22D3EE)!important;box-shadow:0 0 14px rgba(124,58,237,.45)}
+  .bar[style*="#94a3b8"]{background:rgba(255,255,255,.20)!important}
+  .barrow{color:var(--ink-soft)} .barrow .lab,.barrow .v{color:#fff}
+  .tick{color:var(--green);text-shadow:0 0 10px rgba(52,211,153,.6)}
+  .src,.note{color:#7F7CAB}
+
+  /* cover + closing */
+  .cover,.closing{background:
+      radial-gradient(700px 520px at 88% 8%,rgba(139,92,246,.55),transparent 60%),
+      radial-gradient(620px 460px at 0% 100%,rgba(34,211,238,.28),transparent 60%),
+      linear-gradient(135deg,#0b0820 0%,#140c36 55%,#1d0f4d 100%)}
+  .cover .glow{background:radial-gradient(circle,rgba(167,139,250,.55),transparent 68%);animation:float 9s ease-in-out infinite;filter:blur(6px)}
+  .cover::before,.closing::before{content:"";position:absolute;width:380px;height:380px;left:42%;bottom:-200px;border-radius:50%;z-index:0;
+    background:radial-gradient(circle,rgba(34,211,238,.35),transparent 65%);animation:float 11s ease-in-out infinite reverse;filter:blur(8px)}
+  .cover h1{font-family:var(--display);font-size:74px;letter-spacing:-.04em;line-height:1.02;
+    background:linear-gradient(100deg,#fff 0%,#E9E3FF 40%,#A5B4FC 70%,#67E8F9 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .cover .sub{color:#D7D0F5;font-size:21px}
+  .cover .meta{color:#ECE8FF}
+  .cover .meta b{color:#A99CE0}
+  .cover .logo{font-family:var(--display);font-size:22px;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .closing h1{font-family:var(--display);font-size:82px;letter-spacing:-.04em;
+    background:linear-gradient(100deg,#fff 0%,#C4B5FD 55%,#67E8F9 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+  @keyframes float{0%,100%{transform:translate(0,0)}50%{transform:translate(-26px,18px)}}
+
+  /* footer */
+  .slide > .foot{position:absolute;left:64px;right:64px;bottom:18px;display:flex;justify-content:space-between;font-size:11px;
+    color:#6E6B9A;letter-spacing:.06em;font-weight:600;z-index:1}
+  .foot .brand{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:800;letter-spacing:.02em}
+
+  /* chrome */
+  .chrome{background:rgba(20,16,48,.65);border:1px solid rgba(255,255,255,.08);backdrop-filter:blur(10px)}
+  .chrome button:hover{background:linear-gradient(135deg,#7C3AED,#22D3EE)}
+  .progress{background:var(--grad);height:3px;box-shadow:0 0 12px rgba(139,92,246,.8)}
+
+  /* motion */
+  @keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+  @keyframes grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+  .slide.active > *:not(.glow):not(.foot){animation:rise .7s cubic-bezier(.2,.75,.2,1) both}
+  .slide.active > :nth-child(2){animation-delay:.05s} .slide.active > :nth-child(3){animation-delay:.1s}
+  .slide.active > :nth-child(4){animation-delay:.16s} .slide.active > :nth-child(5){animation-delay:.24s}
+  .slide.active > :nth-child(6){animation-delay:.32s} .slide.active > :nth-child(7){animation-delay:.4s}
+  .slide.active .col > *, .slide.active .grid3 > *{animation:rise .7s cubic-bezier(.2,.75,.2,1) both}
+  .slide.active .col > :nth-child(2),.slide.active .grid3 > :nth-child(2){animation-delay:.12s}
+  .slide.active .col > :nth-child(3),.slide.active .grid3 > :nth-child(3){animation-delay:.22s}
+  .slide.active .grid2 > .col:nth-child(2) > *{animation-delay:.18s}
+  .slide.active .grid2 > .col:nth-child(2) > :nth-child(2){animation-delay:.3s}
+  .slide.active .bar{transform-origin:left center;animation:grow 1s .35s cubic-bezier(.2,.75,.2,1) both}
+  .slide.active table.tbl tr{animation:rise .5s cubic-bezier(.2,.75,.2,1) both}
+  .slide.active table.tbl tr:nth-child(2){animation-delay:.05s}.slide.active table.tbl tr:nth-child(3){animation-delay:.1s}
+  .slide.active table.tbl tr:nth-child(4){animation-delay:.15s}.slide.active table.tbl tr:nth-child(5){animation-delay:.2s}
+  .slide.active table.tbl tr:nth-child(6){animation-delay:.25s}.slide.active table.tbl tr:nth-child(7){animation-delay:.3s}
+  .slide.active table.tbl tr:nth-child(8){animation-delay:.35s}.slide.active table.tbl tr:nth-child(9){animation-delay:.4s}
+  .slide.active table.tbl tr:nth-child(n+10){animation-delay:.45s}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+  @media print{
+    *{animation:none!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    html,body{background:#05040f}
+    .slide{border-radius:0;box-shadow:none;border:none}
+  }
+
+  /* dense tables (top adopters) */
+  table.tbl.sm td,table.tbl.sm th{padding:4px 3px}
+  table.tbl.sm{font-size:11.8px}
+  .grid3 > .card{padding:14px 16px}
+
+  /* voice waveform */
+  .slide > .wave{position:absolute;z-index:1;display:flex;align-items:center;gap:6px;pointer-events:none;
+    -webkit-mask-image:linear-gradient(90deg,transparent,#000 18%,#000 82%,transparent);mask-image:linear-gradient(90deg,transparent,#000 18%,#000 82%,transparent)}
+  .wave i{display:block;width:6px;border-radius:6px;background:linear-gradient(180deg,#E9D5FF 0%,#A78BFA 45%,#22D3EE 100%);
+    box-shadow:0 0 12px rgba(139,92,246,.55);transform-origin:center;animation:eq 1.6s ease-in-out infinite}
+  .wave.w-cover{right:64px;top:50%;height:300px;margin-top:-150px;width:440px}
+  .wave.w-close{left:50%;bottom:70px;height:90px;width:700px;margin-left:-350px;opacity:.55;gap:5px}
+  .wave.w-close i{width:5px}
+  @keyframes eq{0%,100%{transform:scaleY(.45)}50%{transform:scaleY(1)}}
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+<div class="stage" id="stage">
+<section class="slide cover active">
+  <div class="glow"></div>
+  <div class="wave w-cover"><i style="height:18%;animation-delay:-0.00s"></i><i style="height:43%;animation-delay:-0.14s"></i><i style="height:58%;animation-delay:-0.27s"></i><i style="height:61%;animation-delay:-0.41s"></i><i style="height:54%;animation-delay:-0.55s"></i><i style="height:40%;animation-delay:-0.69s"></i><i style="height:27%;animation-delay:-0.82s"></i><i style="height:19%;animation-delay:-0.96s"></i><i style="height:19%;animation-delay:-1.10s"></i><i style="height:28%;animation-delay:-1.23s"></i><i style="height:41%;animation-delay:-1.37s"></i><i style="height:54%;animation-delay:-1.51s"></i><i style="height:61%;animation-delay:-0.04s"></i><i style="height:58%;animation-delay:-0.18s"></i><i style="height:42%;animation-delay:-0.32s"></i><i style="height:19%;animation-delay:-0.46s"></i><i style="height:49%;animation-delay:-0.59s"></i><i style="height:77%;animation-delay:-0.73s"></i><i style="height:95%;animation-delay:-0.87s"></i><i style="height:99%;animation-delay:-1.00s"></i><i style="height:88%;animation-delay:-1.14s"></i><i style="height:64%;animation-delay:-1.28s"></i><i style="height:32%;animation-delay:-1.41s"></i><i style="height:35%;animation-delay:-1.55s"></i><i style="height:60%;animation-delay:-0.09s"></i><i style="height:73%;animation-delay:-0.23s"></i><i style="height:73%;animation-delay:-0.36s"></i><i style="height:62%;animation-delay:-0.50s"></i><i style="height:45%;animation-delay:-0.64s"></i><i style="height:28%;animation-delay:-0.77s"></i><i style="height:19%;animation-delay:-0.91s"></i><i style="height:21%;animation-delay:-1.05s"></i><i style="height:21%;animation-delay:-1.18s"></i><i style="height:32%;animation-delay:-1.32s"></i><i style="height:43%;animation-delay:-1.46s"></i><i style="height:47%;animation-delay:-1.59s"></i><i style="height:42%;animation-delay:-0.13s"></i><i style="height:27%;animation-delay:-0.27s"></i><i style="height:33%;animation-delay:-0.41s"></i><i style="height:60%;animation-delay:-0.54s"></i></div>
+  <div class="eyebrow">Quarterly Product Review · Q2 FY26–27</div>
+  <h1>Outcomes Review<br>Mio AI Voice</h1>
+  <div class="sub">July – September 2026 · Target vs Actual vs Impact</div>
+  <div class="meta">
+    <div><b>Presented by</b>Kartik Chhabra, Sr. Product Analyst</div>
+    <div><b>Product</b>Mio AI Voice · Meritto</div>
+  </div>
+  <div class="meta" style="margin-top:auto"><div class="logo">meritto</div></div>
+</section>
+
+<section class="slide">
+  <div class="eyebrow">Overview</div>
+  <h1 class="title">Q2 Scorecard — Target vs Actual</h1>
+  <div class="rule"></div>
+  <div class="card" style="padding:14px 22px">
+    <table class="tbl big">
+      <thead><tr><th style="width:24%">Outcome</th><th style="width:8%">Weight</th><th style="width:20%">Target</th><th style="width:30%">Actual</th><th>Result</th></tr></thead>
+      <tbody>
+        <tr><td><b>Documentation completion</b></td><td>25%</td><td>100% of assigned docs</td><td>5 of 6 docs done (<b>83%</b>)</td><td><span class="pill tag-amber">Partly met</span></td></tr>
+        <tr><td><b>Bug rate post-release</b></td><td>10%</td><td>No target defined</td><td><b>1</b> critical bug across 4 releases (fixed)</td><td><span class="pill tag-gray">Fixed</span></td></tr>
+        <tr><td><b>Ticket count (QoQ)</b></td><td rowspan="2">25%</td><td>20% lower than Q1</td><td><b>63</b> vs 32 in Q1 (<b>+97%</b>)</td><td><span class="pill tag-red">Not met</span></td></tr>
+        <tr><td><b>Due-date breaches</b></td><td>Fewer missed deadlines</td><td><b>0</b> of 61 closed missed (Q1: 2 of 30)</td><td><span class="pill tag-green">Improved</span></td></tr>
+        <tr><td><b>Product materials</b></td><td>20%</td><td>Articles per feature + 1 KSS</td><td><b>5</b> articles · <b>3</b> KSS · <b>2</b> videos</td><td><span class="pill tag-green">Met</span></td></tr>
+        <tr><td><b>GTM &amp; marketing</b></td><td>—</td><td>1 feature GTM</td><td><b>4</b> feature GTMs</td><td><span class="pill tag-green">Exceeded</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="note">Documentation: Impact report emails was deprioritised by stakeholders and moved to Q3, so it is excluded (71% if counted). Ticket count: the Q1 base is understated, because Zoho tracking began in late April and many Q1 queries came directly by email in parallel. Source: Zoho Desk tasks for the Mio AI Voice product SPOC.</div>
+  <div class="foot"><span><span class="brand">meritto</span> &nbsp;·&nbsp; Mio AI Voice &nbsp;·&nbsp; Q2 FY26–27</span><span>02 / 19</span></div>
+</section>
+
+<section class="slide">
+  <div class="eyebrow">Outcome 1 · Documentation <span class="sub">25%</span></div>
+  <h1 class="title">Documentation — Planned vs Delivered</h1>
+  <div class="rule"></div>
+  <div class="grid2 wide">
+    <div class="col">
+      <div class="kpis">
+        <div class="kpi"><div class="n">100%</div><div class="l">Target</div></div>
+        <div class="kpi"><div class="n">5 / 6</div><div class="l">Actual — docs done</div></div>
+        <div class="kpi accent"><div class="n">83%</div><div class="l">Achievement</div></div>
+      </div>
+      <div class="card" style="flex:1;padding:12px 18px">
+        <table class="tbl">
+          <thead><tr><th>Document</th><th>Doc</th><th>Go-live status</th></tr></thead>
+          <tbody>
+            <tr><td><b>Mio Voice in Opportunity Manager</b></td><td><span class="pill tag-green">Done</span></td><td><span class="pill tag-green">Live</span></td></tr>
+            <tr><td><b>Enhanced Insights cards</b></td><td><span class="pill tag-green">Done</span></td><td><span class="pill tag-green">Live</span></td></tr>
+            <tr><td><b>Mio Voice in Application Manager</b></td><td><span class="pill tag-green">Done</span></td><td><span class="pill tag-gray">Awaiting dev</span></td></tr>
+            <tr><td><b>Sarvam vendor integration</b></td><td><span class="pill tag-green">Done</span></td><td><span class="pill tag-amber">In dev · live end Oct</span></td></tr>
+            <tr><td><b>Schedule Campaign</b></td><td><span class="pill tag-green">Done</span></td><td><span class="pill tag-gray">Awaiting dev</span></td></tr>
+            <tr><td><b>Real-time call transfer</b></td><td><span class="pill tag-amber">In progress</span></td><td>—</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card">
+        <h3><span class="dot" style="background:var(--green)"></span>Impact</h3>
+        <ul class="clean check">
+          <li>Q2 docs: <b>2 live in Q2</b> (Opportunity Manager, Insights cards); 3 are with dev (Sarvam in development; Application Manager and Schedule Campaign awaiting pickup)</li>
+          <li>Q1 docs <b>Call Retry</b> and <b>enhanced Lead Manager filters</b> also went live in July</li>
+        </ul>
+      </div>
+      <div class="card" style="flex:1">
+        <h3><span class="dot" style="background:var(--amber)"></span>Gap</h3>
+        <ul class="clean warn">
+          <li><b>Real-time call transfer</b> doc is still in progress: slow resolution and replies from the third party (Ozonetel)</li>
+          <li>Go-live for the rest depends on dev capacity, outside the documentation commitment</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span><span class="brand">meritto</span> &nbsp;·&nbsp; Mio AI Voice &nbsp;·&nbsp; Q2 FY26–27</span><span>03 / 19</span></div>
+</section>
+
+<section class="slide">
+  <div class="eyebrow">Outcome 2 · Bug rate post-release <span class="sub">10%</span></div>
+  <h1 class="title">Critical Bugs After Release</h1>
+  <div class="rule"></div>
+  <div class="grid2 wide">
+    <div class="col">
+      <div class="kpis">
+        <div class="kpi"><div class="n">—</div><div class="l">Target: none defined</div></div>
+        <div class="kpi accent"><div class="n">1</div><div class="l">Actual — critical bugs across 4 releases</div></div>
+      </div>
+      <div class="card" style="flex:1;padding:12px 18px">
+        <table class="tbl">
+          <thead><tr><th>Release (Q2)</th><th>Critical bugs</th></tr></thead>
+          <tbody>
+            <tr><td><b>Call Retry</b></td><td><span class="pill tag-green">None reported so far</span></td></tr>
+            <tr><td><b>Enhanced Lead Manager filters &amp; centralized call logging</b></td><td><span class="pill tag-amber">1 — fixed</span></td></tr>
+            <tr><td><b>Mio Voice in Opportunity Manager</b></td><td><span class="pill tag-green">None reported so far</span></td></tr>
+            <tr><td><b>Enhanced Insights cards</b></td><td><span class="pill tag-green">None reported so far</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card" style="flex:1">
+        <h3><span class="dot" style="background:var(--amber)"></span>The one bug</h3>
+        <ul class="clean warn">
+          <li><b>Call Status</b>, <b>Call Type</b> and <b>Call Ended By</b> showed up as free-text fields, so users had to type the value to filter</li>
+        </ul>
+        <h3 style="margin-top:14px"><span class="dot" style="background:var(--green)"></span>Corrective action</h3>
+        <ul class="clean check">
+          <li>The three fields were changed to <b>dropdown</b> fields</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="note">"None reported so far": releases still inside their 90-day window are shown as reported to date.</div>
+  <div class="foot"><span><span class="brand">meritto</span> &nbsp;·&nbsp; Mio AI Voice &nbsp;·&nbsp; Q2 FY26–27</span><span>04 / 19</span></div>
+</section>
+
+<section class="slide">
+  <div class="eyebrow">Outcome 3 · Ticket handling <span class="sub">25%</span></div>
+  <h1 class="title">Ticket Count — Q2 vs Q1</h1>
+  <div class="rule"></div>
+  <div class="grid2 wide">
+    <div class="col">
+      <div class="kpis">
+        <div class="kpi"><div class="n">−20%</div><div class="l">Target vs Q1</div></div>
+        <div class="kpi"><div class="n">32 → 63</div><div class="l">Actual (Q1 → Q2)</div></div>
+        <div class="kpi accent"><div class="n">+97%</div><div class="l">Not met</div></div>
+      </div>
+      <div class="card" style="flex:1">
+        <h3><span class="dot"></span>By type <span style="font-size:12px;color:var(--muted);font-weight:600">(grey = Q1 · purple = Q2)</span></h3>
+        <div class="barrow"><div class="lab">Bugs</div><div style="flex:1"><div><span class="bar" style="width:31.914893617021278%;background:#94a3b8"></span> <span class="v">15</span></div><div style="margin-top:3px"><span class="bar" style="width:80.85106382978722%;background:var(--accent)"></span> <span class="v">38</span></div></div></div>
+        <div class="barrow"><div class="lab">How-to</div><div style="flex:1"><div><span class="bar" style="width:10.638297872340425%;background:#94a3b8"></span> <span class="v">5</span></div><div style="margin-top:3px"><span class="bar" style="width:27.659574468085108%;background:var(--accent)"></span> <span class="v">13</span></div></div></div>
+        <div class="barrow"><div class="lab">Feature asks</div><div style="flex:1"><div><span class="bar" style="width:21.27659574468085%;background:#94a3b8"></span> <span class="v">10</span></div><div style="margin-top:3px"><span class="bar" style="width:19.148936170212767%;background:var(--accent)"></span> <span class="v">9</span></div></div></div>
+        <div class="barrow"><div class="lab">Other</div><div style="flex:1"><div><span class="bar" style="width:4.25531914893617%;background:#94a3b8"></span> <span class="v">2</span></div><div style="margin-top:3px"><span class="bar" style="width:6.382978723404255%;background:var(--accent)"></span> <span class="v">3</span></div></div></div>
+        <div class="note" style="padding-top:6px"><b>Why Q1 is low:</b> Zoho tracking began in late April, and many Q1 queries came directly by email in parallel. Q2 by month: Jul 13 · Aug 28 · Sep 22. Closed: 61 of 63; the 2 open are not yet due.</div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card" style="flex:1">
+        <h3><span class="dot" style="background:var(--amber)"></span>Top reasons for the miss</h3>
+        <ul class="clean warn">
+          <li><b>The product scaled.</b> Live clients grew from 76 to 103 during Q2 (+27 go-lives): more clients, more calls, more questions</li>          <li><b>Two recurring themes</b> make up 19 of 63 (30%): wrong lead qualification (10, none in Q1) and lead fields not updating (9, up from 2)</li>
+        </ul>
+        <h3 style="margin-top:14px"><span class="dot"></span>Year on year</h3>
+        <ul class="clean">
+          <li>No Jul–Sep 2025 base exists: Mio AI Voice tickets began in late April 2026</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="src">Source: Zoho Desk tasks created 1 Jul – 30 Sep 2026 for the Mio AI Voice product owner. Full list with client and resolution tag available.</div>
+  <div class="foot"><span><span class="brand">meritto</span> &nbsp;·&nbsp; Mio AI Voice &nbsp;·&nbsp; Q2 FY26–27</span><span>05 / 19</span></div>
+</section>
+
+<section class="slide">
+  <div class="eyebrow">Outcome 4 · Product materials <span class="sub">20%</span></div>
+  <h1 class="title">Articles &amp; Knowledge Sharing</h1>
+  <div class="rule"></div>
+  <div class="kpis" style="margin-bottom:16px">
+    <div class="kpi accent"><div class="n">5</div><div class="l">Articles — one per release</div></div>
+    <div class="kpi"><div class="n">3</div><div class="l">KSS sessions</div></div>
+    <div class="kpi"><div class="n">2</div><div class="l">Videos</div></div>
+  </div>
+  <div class="grid3">
+    <div class="card">
+      <h3><span class="dot" style="background:var(--green)"></span>Articles</h3>
+      <ul class="clean check">
+        <li>Call Retry</li>
+        <li>Enhanced Lead Manager filters &amp; centralized call logging</li>
+        <li>Mio Voice in Opportunity Manager</li>
+        <li>Enhanced Insights cards (Application Submitted, Enrolment)</li>
+        <li>Application Follow-up Agent</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3><span class="dot" style="background:var(--green)"></span>KSS sessions</h3>
+      <ul class="clean check">
+        <li>Mio AI Voice market learnings &amp; customer expectations</li>
+        <li>Call Retry release</li>
+        <li>Enhanced Lead Manager filters &amp; centralized call logging</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3><span class="dot" style="background:var(--green)"></span>Videos</h3>
+      <ul class="clean check">
+        <li>Call Retry</li>
+        <li>Application Follow-up Agent use case</li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot"><span><span class="brand">meritto</span> &nbsp;·&nbsp; Mio AI Voice &nbsp;·&nbsp; Q2 FY26–27</span><span>06 / 19</span></div>
+</section>
+
+<section class="slide">
+  <div class="eyebrow">Outcome 5 · GTM &amp; marketing</div>
+  <h1 class="title">Go-To-Market — 4 Feature Launches</h1>
+  <div class="rule"></div>
+  <div class="kpis" style="margin-bottom:16px">
+    <div class="kpi"><div class="n">1</div><div class="l">Target — feature GTM</div></div>
+    <div class="kpi"><div class="n">4</div><div class="l">Actual — feature GTMs</div></div>
+    <div class="kpi accent"><div class="n">400%</div><div class="l">Achievement</div></div>
+  </div>
+  <div class="card" style="padding:14px 22px">
+    <table class="tbl big">
+      <thead><tr><th style="width:34%">Feature</th><th class="c">Landing page</th><th class="c">Sales deck</th><th class="c">LinkedIn post</th><th class="c">Newsletter</th></tr></thead>
+      <tbody>
+        <tr><td><b>Call Retry</b></td><td class="tick">✓</td><td class="tick">✓</td><td class="tick">✓</td><td class="tick">✓</td></tr>
+        <tr><td><b>Application Follow-up Agent</b></td><td class="tick">✓</td><td class="tick">✓</td><td class="tick">✓</td><td class="tick">✓</td></tr>
+        <tr><td><b>Feedback Agent</b></td><td class="tick">✓</td><td class="tick">✓</td><td class="tick">✓</td><td class="tick">✓</td></tr>
+        <tr><td><b>Walk-In Drive Agent</b></td><td class="tick">✓</td><td class="tick">✓</td><td class="tick">✓</td><td class="tick">✓</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="note">Mio AI Voice in Opportunity Manager was launched with an article.</div>
+  <div class="foot"><span><span class="brand">meritto</span> &nbsp;·&nbsp; Mio AI Voice &nbsp;·&nbsp; Q2 FY26–27</span><span>07 / 19</span></div>
+</section>
+
+<section class="slide">
+  <div class="eyebrow">Adoption · Clients live</div>
+  <h1 class="title">Live Clients Grew From 76 to 103</h1>
+  <div class="rule"></div>
+  <div class="grid2 wide">
+    <div class="col">
+      <div class="kpis">
+        <div class="kpi"><div class="n">76</div><div class="l">Live at end of Q1 (30 Jun)</div></div>
+        <div class="kpi accent"><div class="n">103</div><div class="l">Live at end of Q2 (30 Sep)</div></div>
+        <div class="kpi"><div class="n">+27</div><div class="l">Go-lives in Q2 (+36%)</div></div>
+      </div>
+      <div class="card" style="flex:1">
+        <h3><span class="dot"></span>Go-lives per month <span style="font-size:12px;color:var(--muted);font-weight:600">(grey = Q1 · purple = Q2)</span></h3>
+        <div class="barrow"><div class="lab" style="width:48px">Apr</div><div style="flex:1"><span class="bar" style="width:58.94736842105263%;background:#94a3b8"></span> <span class="v">14</span></div></div><div class="barrow"><div class="lab" style="width:48px">May</div><div style="flex:1"><span class="bar" style="width:58.94736842105263%;background:#94a3b8"></span> <span class="v">14</span></div></div><div class="barrow"><div class="lab" style="width:48px">Jun</div><div style="flex:1"><span class="bar" style="width:80%;background:#94a3b8"></span> <span class="v">19</span></div></div><div class="barrow"><div class="lab" style="width:48px">Jul</div><div style="flex:1"><span class="bar" style="width:37.89473684210526%;background:var(--accent)"></span> <span class="v">9</span></div></div><div class="barrow"><div class="lab" style="width:48px">Aug</div><div style="flex:1"><span class="bar" style="width:33.68421052631579%;background:var(--accent)"></span> <span class="v">8</span></div></div><div class="barrow"><div class="lab" style="width:48px">Sep</div><div style="flex:1"><span class="bar" style="width:42.10526315789473%;background:var(--accent)"></span> <span class="v">10</span></div></div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card" style="flex:1">
+        <h3><span class="dot" style="background:var(--green)"></span>What it shows</h3>
+        <ul class="clean check">
+          <li>Q2 added <b>27</b> new live clients on top of <b>76</b></li>
+          <li>Q1 had 47 go-lives (Apr–Jun); Q2 pace was slower at 9, 8 and 10 a month</li>
+        </ul>
+        <h3 style="margin-top:14px"><span class="dot" style="background:var(--amber)"></span>Why it matters for tickets</h3>
+        <ul class="clean warn">
+          <li>More live clients means more calls and more questions, which is part of why task volume rose</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="src">Source: Mio onboarding projects; "live" = onboarding project completed (go-live date).</div>
+  <div class="foot"><span><span class="brand">meritto</span> &nbsp;·&nbsp; Mio AI Voice &nbsp;·&nbsp; Q2 FY26–27</span><span>08 / 19</span></div>
+</section>
+
+<section class="slide">
+  <div class="eyebrow">Adoption · Call Retry (live 13 Jul 2026)</div>
+  <h1 class="title">Retry Added 11.9% to the Connect Rate</h1>
+  <div class="rule"></div>
+  <div class="grid2 wide">
+    <div class="col">
+      <div class="kpis">
+        <div class="kpi"><div class="n">1.9M</div><div class="l">Unique leads dialled since go-live</div></div>
+        <div class="kpi"><div class="n">38.6%</div><div class="l">Connected on the 1st call</div></div>
+        <div class="kpi accent"><div class="n">50.5%</div><div class="l">Connect rate with retry</div></div>
+      </div>
+      <div class="card" style="flex:1">
+        <h3><span class="dot"></span>Connect rate, built up call by call <span style="font-size:12px;color:var(--muted);font-weight:600">(% of leads dialled)</span></h3>
+        <div class="barrow"><div class="lab" style="width:96px">1st call</div><div style="flex:1"><span class="bar" style="width:78%;background:#94a3b8"></span> <span class="v">38.61%</span></div></div><div class="barrow"><div class="lab" style="width:96px">+ 1st retry</div><div style="flex:1"><span class="bar" style="width:17.5959595959596%;background:var(--accent)"></span> <span class="v">+8.71</span></div></div><div class="barrow"><div class="lab" style="width:96px">+ 2nd retry</div><div style="flex:1"><span class="bar" style="width:5.777777777777778%;background:var(--accent)"></span> <span class="v">+2.86</span></div></div><div class="barrow"><div class="lab" style="width:96px">+ 3rd retry</div><div style="flex:1"><span class="bar" style="width:1.2%;background:var(--accent)"></span> <span class="v">+0.26</span></div></div><div class="barrow"><div class="lab" style="width:96px">+ 4th retry</div><div style="flex:1"><span class="bar" style="width:1.2%;background:var(--accent)"></span> <span class="v">+0.05</span></div></div><div class="barrow"><div class="lab" style="width:96px">+ 5th retry</div><div style="flex:1"><span class="bar" style="width:1.2%;background:var(--accent)"></span> <span class="v">+0.03</span></div></div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card">
+        <h3><span class="dot" style="background:var(--green)"></span>How widely it is used</h3>
+        <div style="margin:10px 0 4px;font-size:14px;color:var(--ink)"><b>Institutes on retry</b> <span style="color:var(--muted)">66 of 80</span></div><div><span class="bar" style="width:82.5%;background:var(--accent)"></span> <span class="v">82.5%</span></div>
+        <div style="margin:10px 0 4px;font-size:14px;color:var(--ink)"><b>Campaigns on retry</b> <span style="color:var(--muted)">959 of 1,805</span></div><div><span class="bar" style="width:53.13%;background:var(--accent)"></span> <span class="v">53.13%</span></div>
+      </div>
+      <div class="card" style="flex:1">
+        <h3><span class="dot" style="background:var(--green)"></span>What it shows</h3>
+        <ul class="clean check">
+          <li>About <b>1 in 4</b> connected leads (11.9% of the 50.5%) was reached only because of a retry</li>
+          <li>The <b>1st and 2nd retries</b> give almost all of the gain (+11.57% of +11.91%). A 3rd, 4th or 5th retry adds very little</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="src">Source: Mio Voice retry adoption dashboard, 13 Jul to 8 Oct 2026. Connect rate = leads connected / unique leads dialled.</div>
+  <div class="foot"><span><span class="brand">meritto</span> &nbsp;·&nbsp; Mio AI Voice &nbsp;·&nbsp; Q2 FY26–27</span><span>09 / 19</span></div>
+</section>
+
+<section class="slide">
+  <div class="eyebrow">Adoption · Call Retry · Top adopters</div>
+  <h1 class="title">Best Accounts Reach 62% to 74% Connect Rate</h1>
+  <div class="rule"></div>
+  <div class="grid3">
+    <div class="card"><h3><span class="dot"></span>1,000+ leads dialled <span style="font-size:12px;color:var(--muted);font-weight:600">· best 74.4%</span></h3><table class="tbl sm"><colgroup><col style="width:52%"><col style="width:19%"><col style="width:13%"><col style="width:16%"></colgroup><tr><th>Institute</th><th class="r">Connect</th><th class="r">Lift</th><th class="r">Dialled</th></tr><tr><td class="nm" title="Sagar Institute of Research &…">1. Sagar Institute of Research &…</td><td class="r" style="font-weight:800;color:var(--green)">74.4%</td><td class="r">+20.6</td><td class="r">5.0K</td></tr><tr><td class="nm" title="Greater Noida Institute of Tec…">2. Greater Noida Institute of Tec…</td><td class="r" style="font-weight:800;color:var(--green)">73.2%</td><td class="r">+29.1</td><td class="r">12.6K</td></tr><tr><td class="nm" title="Sir Padampat Singhania Univ…">3. Sir Padampat Singhania Univ…</td><td class="r" style="font-weight:800;color:var(--green)">72.9%</td><td class="r">+22.4</td><td class="r">6.7K</td></tr><tr><td class="nm" title="IILM">4. IILM</td><td class="r" style="font-weight:800;color:var(--green)">72.7%</td><td class="r">+25.1</td><td class="r">7.0K</td></tr><tr><td class="nm" title="DBS - Global University">5. DBS - Global University</td><td class="r" style="font-weight:800;color:var(--green)">71.8%</td><td class="r">+20.3</td><td class="r">10.7K</td></tr><tr><td class="nm" title="NIIT LIMITED">6. NIIT LIMITED</td><td class="r" style="font-weight:800;color:var(--amber)">69.3%</td><td class="r">+12.6</td><td class="r">9.5K</td></tr><tr><td class="nm" title="Mohan Babu University">7. Mohan Babu University</td><td class="r" style="font-weight:800;color:var(--amber)">69.2%</td><td class="r">+19.4</td><td class="r">18.9K</td></tr><tr><td class="nm" title="Assam down town University">8. Assam down town University</td><td class="r" style="font-weight:800;color:var(--amber)">69.2%</td><td class="r">+16.9</td><td class="r">10.2K</td></tr><tr><td class="nm" title="IMS Noida">9. IMS Noida</td><td class="r" style="font-weight:800;color:var(--amber)">69.1%</td><td class="r">+25.3</td><td class="r">5.9K</td></tr><tr><td class="nm" title="PP Savani University">10. PP Savani University</td><td class="r" style="font-weight:800;color:var(--amber)">67.8%</td><td class="r">+19.1</td><td class="r">20.1K</td></tr></table></div>
+    <div class="card"><h3><span class="dot"></span>10,000+ leads dialled <span style="font-size:12px;color:var(--muted);font-weight:600">· best 73.2%</span></h3><table class="tbl sm"><colgroup><col style="width:52%"><col style="width:19%"><col style="width:13%"><col style="width:16%"></colgroup><tr><th>Institute</th><th class="r">Connect</th><th class="r">Lift</th><th class="r">Dialled</th></tr><tr><td class="nm" title="Greater Noida Institute of Tec…">1. Greater Noida Institute of Tec…</td><td class="r" style="font-weight:800;color:var(--green)">73.2%</td><td class="r">+29.1</td><td class="r">12.6K</td></tr><tr><td class="nm" title="DBS - Global University">2. DBS - Global University</td><td class="r" style="font-weight:800;color:var(--green)">71.8%</td><td class="r">+20.3</td><td class="r">10.7K</td></tr><tr><td class="nm" title="Mohan Babu University">3. Mohan Babu University</td><td class="r" style="font-weight:800;color:var(--amber)">69.2%</td><td class="r">+19.4</td><td class="r">18.9K</td></tr><tr><td class="nm" title="Assam down town University">4. Assam down town University</td><td class="r" style="font-weight:800;color:var(--amber)">69.2%</td><td class="r">+16.9</td><td class="r">10.2K</td></tr><tr><td class="nm" title="PP Savani University">5. PP Savani University</td><td class="r" style="font-weight:800;color:var(--amber)">67.8%</td><td class="r">+19.1</td><td class="r">20.1K</td></tr><tr><td class="nm" title="Shobhit University (Online Pr…">6. Shobhit University (Online Pr…</td><td class="r" style="font-weight:800;color:var(--amber)">63.9%</td><td class="r">+19.4</td><td class="r">29.0K</td></tr><tr><td class="nm" title="Sage University, Bhopal">7. Sage University, Bhopal</td><td class="r" style="font-weight:800;color:var(--amber)">61.8%</td><td class="r">+21.9</td><td class="r">174.6K</td></tr><tr><td class="nm" title="Royal Global University">8. Royal Global University</td><td class="r" style="font-weight:800;color:var(--muted)">59.3%</td><td class="r">+11.8</td><td class="r">43.2K</td></tr><tr><td class="nm" title="KR Mangalam University">9. KR Mangalam University</td><td class="r" style="font-weight:800;color:var(--muted)">58.9%</td><td class="r">+17.9</td><td class="r">20.7K</td></tr><tr><td class="nm" title="CHRIST (Deemed to be Unive…">10. CHRIST (Deemed to be Unive…</td><td class="r" style="font-weight:800;color:var(--muted)">58.6%</td><td class="r">+16.0</td><td class="r">10.1K</td></tr></table></div>
+    <div class="card"><h3><span class="dot"></span>1 lakh+ leads dialled <span style="font-size:12px;color:var(--muted);font-weight:600">· best 61.8%</span></h3><table class="tbl sm"><colgroup><col style="width:52%"><col style="width:19%"><col style="width:13%"><col style="width:16%"></colgroup><tr><th>Institute</th><th class="r">Connect</th><th class="r">Lift</th><th class="r">Dialled</th></tr><tr><td class="nm" title="Sage University, Bhopal">1. Sage University, Bhopal</td><td class="r" style="font-weight:800;color:var(--amber)">61.8%</td><td class="r">+21.9</td><td class="r">174.6K</td></tr><tr><td class="nm" title="D Y Patil Deemed to be Unive…">2. D Y Patil Deemed to be Unive…</td><td class="r" style="font-weight:800;color:var(--muted)">54.5%</td><td class="r">+16.8</td><td class="r">116.7K</td></tr><tr><td class="nm" title="Institute #524">3. Institute #524</td><td class="r" style="font-weight:800;color:var(--muted)">46.6%</td><td class="r">+7.0</td><td class="r">110.1K</td></tr><tr><td class="nm" title="Woxsen University">4. Woxsen University</td><td class="r" style="font-weight:800;color:var(--muted)">43.9%</td><td class="r">+11.0</td><td class="r">451.8K</td></tr></table></div>
+  </div>
+  <div class="card" style="margin-top:12px">
+    <ul class="clean check" style="font-size:14px">
+      <li>With 1,000+ leads dialled, five accounts connect <b>72% to 74%</b> of their leads and five more connect <b>68% to 69%</b>. Even at 10,000+ leads, two accounts are above <b>71%</b>. Overall, across all accounts, it is 50.5%</li>
+      <li>The same feature gives very different results from account to account, so the connect rate depends largely on the <b>quality of the lead data</b> being dialled</li>
+    </ul>
+  </div>
+  <div class="src">Source: Mio Voice retry adoption dashboard, 13 Jul to 8 Oct 2026. Connect = % of unique leads connected. Lift = % gained from retries. Green = 70%+, amber = 60–69%, grey = below 60%. Long names are cut as in the dashboard.</div>
+  <div class="foot"><span><span class="brand">meritto</span> &nbsp;·&nbsp; Mio AI Voice &nbsp;·&nbsp; Q2 FY26–27</span><span>10 / 19</span></div>
+</section>
+
+<section class="slide">
+  <div class="eyebrow">Beyond the goals · Impact story</div>
+  <h1 class="title">Retry Reaches Every Mio Voice Account</h1>
+  <div class="rule"></div>
+  <div class="grid2 story">
+    <div class="col">
+      <div class="card">
+        <h3><span class="dot" style="background:var(--red)"></span>Problem</h3>
+        <ul class="clean warn">
+          <li>A lead who did not pick up on the first call was never tried again, so only <b>38.6%</b> of leads dialled were connected</li>
+          <li>Retry could not be used inside automations until each Mio Voice account was enabled on automation</li>
+        </ul>
+      </div>
+      <div class="card" style="flex:1">
+        <h3><span class="dot"></span>What was done</h3>
+        <ul class="clean">
+          <li>Released <b>Call Retry</b> on 13 Jul 2026 and enabled <b>every</b> Mio Voice account on automation</li>
+          <li>For accounts that already ran automations before Retry: with the Ops team, <b>duplicate draft automations with Retry on</b> are created, and CS is mailed to switch to them</li>
+        </ul>
+      </div>
+    </div>
+    <div class="col">
+      <div class="outcome">
+        <div class="lbl">Outcome</div>
+        <div class="big">+11.9%</div>
+        <div class="sub">connect rate, from 38.6% on the first call to 50.5% with retry, across 1.9M unique leads dialled. About 232K leads were reached only because of a retry.</div>
+      </div>
+      <div class="card">
+        <h3><span class="dot" style="background:var(--green)"></span>Reach</h3>
+        <ul class="clean check">
+          <li>100% of Mio Voice accounts can use Retry in automation</li>
+          <li>66 of 80 institutes (83%) and 959 of 1,805 campaigns (53%) are on retry so far</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span><span class="brand">meritto</span> &nbsp;·&nbsp; Mio AI Voice &nbsp;·&nbsp; Q2 FY26–27</span><span>11 / 19</span></div>
+</section>
+
+<section class="slide">
+  <div class="eyebrow">Adoption · Impact story</div>
+  <h1 class="title">Application Follow-up Agent Drove 8.9% of Q2 Calling</h1>
+  <div class="rule"></div>
+  <div class="grid2 story">
+    <div class="col">
+      <div class="card">
+        <h3><span class="dot" style="background:var(--red)"></span>Problem</h3>
+        <ul class="clean warn">
+          <li>Applicants who start but do not finish an application need timely, repeated follow-up, which is hard to do by hand for every lead</li>
+        </ul>
+      </div>
+      <div class="card" style="flex:1">
+        <h3><span class="dot"></span>What was done</h3>
+        <ul class="clean">
+          <li>Launched the <b>Application Follow-up Agent</b> and drove its adoption through the quarter</li>
+          <li>Worked hands-on with the CS team and joined <b>client calls</b>, including Bennett University and Sharda University</li>
+          <li>Built <b>customised agents</b> for MIT-WPU Pune, Galgotias University, Sharda University and Bennett University, then handed them over to the Ops team</li>
+        </ul>
+      </div>
+    </div>
+    <div class="col">
+      <div class="outcome">
+        <div class="lbl">Outcome</div>
+        <div class="big">8.9%</div>
+        <div class="sub">of all leads dialled in Q2 came from this agent (661,571 of 7,426,121). Its connect rate was 60.5%, against 54.2% overall.</div>
+      </div>
+      <div class="card">
+        <h3><span class="dot"></span>The numbers</h3>
+        <table class="tbl"><tr><th>Q2</th><th>This agent</th><th>Share of all Q2</th></tr><tr><td>Leads dialled</td><td class="num">661,571</td><td class="num">8.9% <span style="color:var(--muted);font-weight:600">of 7,426,121</span></td></tr><tr><td>Unique leads</td><td class="num">489,911</td><td class="num">15.7% <span style="color:var(--muted);font-weight:600">of 3,121,490</span></td></tr><tr><td>Unique leads connected</td><td class="num">296,370</td><td class="num">17.5% <span style="color:var(--muted);font-weight:600">of 1,692,385</span></td></tr><tr><td>Connect rate</td><td class="num">60.5%</td><td class="num"><span style="color:var(--muted);font-weight:600">overall 54.2%</span></td></tr><tr><td>Goals achieved</td><td class="num">21,995</td><td class="num"><span style="color:var(--muted);font-weight:600">7.4% of connected</span></td></tr></table>
+      </div>
+    </div>
+  </div>
+  <div class="src">Source: Application Follow-up Agent adoption data and overall Mio Voice Q2 volume. Connect rate = unique leads connected / unique leads dialled.</div>
+  <div class="foot"><span><span class="brand">meritto</span> &nbsp;·&nbsp; Mio AI Voice &nbsp;·&nbsp; Q2 FY26–27</span><span>12 / 19</span></div>
+</section>
+
+<section class="slide">
+  <div class="eyebrow">Adoption · Walk-In Drive Agent</div>
+  <h1 class="title">Walk-In Drive Agent: 0.2% of Q2 Calling</h1>
+  <div class="rule"></div>
+  <div class="grid2 wide">
+    <div class="col">
+      <div class="kpis">
+        <div class="kpi accent"><div class="n">0.2%</div><div class="l">of all Q2 leads dialled</div></div>
+        <div class="kpi"><div class="n">11,412</div><div class="l">Unique leads dialled</div></div>
+        <div class="kpi"><div class="n">48.7%</div><div class="l">Connect rate (overall 54.2%)</div></div>
+      </div>
+      <div class="card" style="flex:1">
+        <h3><span class="dot"></span>What was done</h3>
+        <ul class="clean">
+          <li>Launched the <b>Walk-In Drive Agent</b> with a full go-to-market: landing page, sales deck, LinkedIn post and newsletter</li>
+          <li>Drove its first adoption with clients this quarter</li>
+        </ul>
+        <h3 style="margin-top:14px"><span class="dot" style="background:var(--green)"></span>Together with the Application Follow-up Agent</h3>
+        <ul class="clean check">
+          <li>The two agents made up <b>9.1%</b> of all Q2 leads dialled (673,508 of 7,426,121)</li>
+        </ul>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card" style="flex:1">
+        <h3><span class="dot" style="background:var(--green)"></span>The numbers</h3>
+        <table class="tbl"><tr><th>Q2</th><th>This agent</th><th>Share of all Q2</th></tr><tr><td>Leads dialled</td><td class="num">11,937</td><td class="num">0.2% <span style="color:var(--muted);font-weight:600">of 7,426,121</span></td></tr><tr><td>Unique leads</td><td class="num">11,412</td><td class="num">0.4% <span style="color:var(--muted);font-weight:600">of 3,121,490</span></td></tr><tr><td>Unique leads connected</td><td class="num">5,562</td><td class="num">0.3% <span style="color:var(--muted);font-weight:600">of 1,692,385</span></td></tr><tr><td>Connect rate</td><td class="num">48.7%</td><td class="num"><span style="color:var(--muted);font-weight:600">overall 54.2%</span></td></tr><tr><td>Goals achieved</td><td class="num">102</td><td class="num"><span style="color:var(--muted);font-weight:600">1.8% of connected</span></td></tr></table>
+      </div>
+    </div>
+  </div>
+  <div class="src">Source: Walk-In Drive Agent adoption data and overall Mio Voice Q2 volume. Connect rate = unique leads connected / unique leads dialled.</div>
+  <div class="foot"><span><span class="brand">meritto</span> &nbsp;·&nbsp; Mio AI Voice &nbsp;·&nbsp; Q2 FY26–27</span><span>13 / 19</span></div>
+</section>
+
+<section class="slide">
+  <div class="eyebrow">Adoption · Impact story</div>
+  <h1 class="title">Every Mio Voice Account Now Has Call Filters and Call Records</h1>
+  <div class="rule"></div>
+  <div class="grid2 story">
+    <div class="col">
+      <div class="card">
+        <h3><span class="dot" style="background:var(--red)"></span>Problem</h3>
+        <ul class="clean warn">
+          <li>A Mio call left only a one-line note on the lead's Timeline, so teams could read it but <b>could not filter or report</b> on how calls went</li>
+        </ul>
+      </div>
+      <div class="card" style="flex:1">
+        <h3><span class="dot"></span>What was done</h3>
+        <ul class="clean">
+          <li><b>Centralized call logging:</b> every Mio call is saved automatically as its own record on the lead, as an activity card on the Timeline and under <b>Dynamic Activity</b></li>
+          <li>Each record holds call status, call type, AI agent, start time, duration and, for connected calls, the recording, transcript and summary</li>
+          <li><b>Enhanced Lead Manager filters:</b> call details can be used in Advanced Filters, with Call Status, Call Type and Call Ended By as dropdowns</li>
+          <li>Switched the release on for the remaining accounts, with a guide for CS, Sales and Ops</li>
+        </ul>
+      </div>
+    </div>
+    <div class="col">
+      <div class="outcome">
+        <div class="lbl">Outcome</div>
+        <div class="big">100%</div>
+        <div class="sub">of Mio Voice accounts now have the enhanced filters and centralized call logging. The accounts that were still waiting to be migrated are done.</div>
+      </div>
+      <div class="card">
+        <h3><span class="dot" style="background:var(--green)"></span>What teams can now do</h3>
+        <ul class="clean check">
+          <li>Build lead lists by how the last AI call went: busy, not answered or connected</li>
+          <li>Filter by AI agent, inbound or outbound, and call date or duration</li>
+          <li>Report on and export the calls from Dynamic Activity</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span><span class="brand">meritto</span> &nbsp;·&nbsp; Mio AI Voice &nbsp;·&nbsp; Q2 FY26–27</span><span>14 / 19</span></div>
+</section>
+
+<section class="slide">
+  <div class="eyebrow">Beyond the goals · Impact story</div>
+  <h1 class="title">Sharper Qualification and Goal Tracking</h1>
+  <div class="rule"></div>
+  <div class="grid2 story">
+    <div class="col">
+      <div class="card">
+        <h3><span class="dot" style="background:var(--red)"></span>Problem</h3>
+        <ul class="clean warn">
+          <li>The model in use (GPT-4.1 mini) was degrading in quality</li>
+          <li>Wrong lead qualification became the biggest new ticket theme in Q2 (10 tasks, none in Q1)</li>
+        </ul>
+      </div>
+      <div class="card" style="flex:1">
+        <h3><span class="dot"></span>What was done</h3>
+        <ul class="clean">
+          <li>Moved to <b>GPT-5 mini</b> at the <b>same call cost</b> (agreed with the vendor)</li>
+          <li>With Ops: a better extraction that shows <b>goal achieved call by call</b></li>
+          <li>New agents get it by default; older, high-volume agents are being migrated to the new evaluation prompt</li>
+        </ul>
+      </div>
+    </div>
+    <div class="col">
+      <div class="outcome">
+        <div class="lbl">Outcome so far</div>
+        <div class="big" style="font-size:40px">Better model, same cost</div>
+        <div class="sub">Rolled out to new agents; migration of existing agents under way with the Ops team.</div>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span><span class="brand">meritto</span> &nbsp;·&nbsp; Mio AI Voice &nbsp;·&nbsp; Q2 FY26–27</span><span>15 / 19</span></div>
+</section>
+
+<section class="slide">
+  <div class="eyebrow">Beyond the goals · Ad-hoc issues fixed</div>
+  <h1 class="title">Ad-hoc Fixes: Data From Bolna</h1>
+  <div class="rule"></div>
+  <div class="card" style="flex:1"><table class="tbl big" style="table-layout:fixed"><colgroup><col style="width:22%"><col style="width:39%"><col style="width:39%"></colgroup><tr><th>Issue</th><th>What went wrong</th><th>What was done</th></tr><tr><td><b>Lead fields not updating</b></td><td>Bolna sent the pingback with the extraction and it was processed, but the lead-field update was not applied.</td><td>Added logs to trace it, and ran a query to update the fields for the affected clients (Graphic Era, IIMT Group of Colleges).</td></tr><tr><td><b>"New key" error in Communication Performance</b></td><td>Bolna returned "wrong bearer token / agent does not exist". Deleting a user on Bolna moves all their agents and sub-accounts to someone else, and the bearer tokens change. Only "new key" was printed, so the real error was never seen.</td><td>The exact error from Bolna is now read and logged, and these cases are handled, so the cause is visible next time.</td></tr><tr><td><b>Bolna changed the retry history format</b></td><td>Bolna changed how it sends retry_history in the pingback, so the affected calls were not processed.</td><td>The vendor fixed the format. A script was written to reformat the affected executions and send them to the webhook again, so the calls were processed.</td></tr></table></div>
+  <div class="foot"><span><span class="brand">meritto</span> &nbsp;·&nbsp; Mio AI Voice &nbsp;·&nbsp; Q2 FY26–27</span><span>16 / 19</span></div>
+</section>
+
+<section class="slide">
+  <div class="eyebrow">Beyond the goals · Ad-hoc issues fixed</div>
+  <h1 class="title">Ad-hoc Fixes: Reports and Screens</h1>
+  <div class="rule"></div>
+  <div class="card" style="flex:1"><table class="tbl" style="table-layout:fixed;font-size:15px"><colgroup><col style="width:22%"><col style="width:39%"><col style="width:39%"></colgroup><tr><th>Issue</th><th>What went wrong</th><th>What was done</th></tr><tr><td><b>"Send to Mio Voice" button missing</b></td><td>While leads were selected to be pushed to Mio, the button disappeared because of a cache issue.</td><td>Fix released.</td></tr><tr><td><b>Agent name missing against the Job ID</b></td><td>The Communication Performance report did not show the agent name for older jobs.</td><td>Fixed.</td></tr><tr><td><b>Wrong agent name on copy</b></td><td>Copying an agent name always gave "lpu eng hindi agent", because it was hardcoded in the front end.</td><td>Fixed.</td></tr><tr><td><b>Connected % not visible</b></td><td>It was missing from the Insights dashboard and the Communication Performance report.</td><td>Fixed. Mio goal achieved is now shown out of connected leads, not out of attempted.</td></tr><tr><td><b>Insights numbers did not match Lead Manager</b></td><td>The Insights dashboard reads from a table shared with another module (Amplify), so that module's data came in too.</td><td>Added a check for Mio in the table.</td></tr></table></div>
+  <div class="foot"><span><span class="brand">meritto</span> &nbsp;·&nbsp; Mio AI Voice &nbsp;·&nbsp; Q2 FY26–27</span><span>17 / 19</span></div>
+</section>
+
+<section class="slide">
+  <div class="eyebrow">Summary</div>
+  <h1 class="title">Gaps &amp; Corrective Actions</h1>
+  <div class="rule"></div>
+  <div class="card" style="padding:14px 22px">
+    <table class="tbl big">
+      <thead><tr><th style="width:20%">Outcome</th><th style="width:26%">Gap</th><th style="width:30%">Top reasons</th><th>Action taken</th></tr></thead>
+      <tbody>
+        <tr><td><b>Ticket count</b></td><td>63 vs 32 in Q1 (+97%); target was −20%</td><td>Live clients 76 → 103 · Q1 base understated · wrong-qualification and lead-field themes</td><td>Articles for every release · KSS on common issues · Ops syncs · better model and extraction</td></tr>
+        <tr><td><b>Documentation</b></td><td>Real-time call transfer doc in progress (5 of 6 done)</td><td>Slow resolution and replies from the third party (Ozonetel)</td><td>Follow-ups with the third party; other telephony partners also explored</td></tr>
+        <tr><td><b>Bug rate</b></td><td>1 critical bug (enhanced filters)</td><td>Call fields showed as free-text</td><td>Changed to dropdown fields</td></tr>      </tbody>
+    </table>
+  </div>
+  <div class="foot"><span><span class="brand">meritto</span> &nbsp;·&nbsp; Mio AI Voice &nbsp;·&nbsp; Q2 FY26–27</span><span>18 / 19</span></div>
+</section>
+
+<section class="slide closing">
+  <div class="wave w-close"><i style="height:18%;animation-delay:-0.00s"></i><i style="height:43%;animation-delay:-0.14s"></i><i style="height:58%;animation-delay:-0.27s"></i><i style="height:61%;animation-delay:-0.41s"></i><i style="height:54%;animation-delay:-0.55s"></i><i style="height:40%;animation-delay:-0.69s"></i><i style="height:27%;animation-delay:-0.82s"></i><i style="height:19%;animation-delay:-0.96s"></i><i style="height:19%;animation-delay:-1.10s"></i><i style="height:28%;animation-delay:-1.23s"></i><i style="height:41%;animation-delay:-1.37s"></i><i style="height:54%;animation-delay:-1.51s"></i><i style="height:61%;animation-delay:-0.04s"></i><i style="height:58%;animation-delay:-0.18s"></i><i style="height:42%;animation-delay:-0.32s"></i><i style="height:19%;animation-delay:-0.46s"></i><i style="height:49%;animation-delay:-0.59s"></i><i style="height:77%;animation-delay:-0.73s"></i><i style="height:95%;animation-delay:-0.87s"></i><i style="height:99%;animation-delay:-1.00s"></i><i style="height:88%;animation-delay:-1.14s"></i><i style="height:64%;animation-delay:-1.28s"></i><i style="height:32%;animation-delay:-1.41s"></i><i style="height:35%;animation-delay:-1.55s"></i><i style="height:60%;animation-delay:-0.09s"></i><i style="height:73%;animation-delay:-0.23s"></i><i style="height:73%;animation-delay:-0.36s"></i><i style="height:62%;animation-delay:-0.50s"></i><i style="height:45%;animation-delay:-0.64s"></i><i style="height:28%;animation-delay:-0.77s"></i><i style="height:19%;animation-delay:-0.91s"></i><i style="height:21%;animation-delay:-1.05s"></i><i style="height:21%;animation-delay:-1.18s"></i><i style="height:32%;animation-delay:-1.32s"></i><i style="height:43%;animation-delay:-1.46s"></i><i style="height:47%;animation-delay:-1.59s"></i><i style="height:42%;animation-delay:-0.13s"></i><i style="height:27%;animation-delay:-0.27s"></i><i style="height:33%;animation-delay:-0.41s"></i><i style="height:60%;animation-delay:-0.54s"></i><i style="height:82%;animation-delay:-0.68s"></i><i style="height:95%;animation-delay:-0.82s"></i><i style="height:93%;animation-delay:-0.95s"></i><i style="height:76%;animation-delay:-1.09s"></i><i style="height:48%;animation-delay:-1.23s"></i><i style="height:22%;animation-delay:-1.37s"></i><i style="height:54%;animation-delay:-1.50s"></i><i style="height:76%;animation-delay:-0.04s"></i><i style="height:85%;animation-delay:-0.18s"></i><i style="height:81%;animation-delay:-0.31s"></i><i style="height:65%;animation-delay:-0.45s"></i><i style="height:44%;animation-delay:-0.59s"></i><i style="height:24%;animation-delay:-0.72s"></i><i style="height:26%;animation-delay:-0.86s"></i><i style="height:30%;animation-delay:-1.00s"></i><i style="height:26%;animation-delay:-1.13s"></i><i style="height:20%;animation-delay:-1.27s"></i><i style="height:30%;animation-delay:-1.41s"></i><i style="height:34%;animation-delay:-1.55s"></i><i style="height:29%;animation-delay:-0.08s"></i><i style="height:21%;animation-delay:-0.22s"></i><i style="height:42%;animation-delay:-0.36s"></i><i style="height:65%;animation-delay:-0.49s"></i><i style="height:82%;animation-delay:-0.63s"></i></div>
+  <h1>Thank you</h1>
+  <p>Questions &amp; discussion</p>
+  <p style="font-size:14px;color:#a893d8;margin-top:36px">Kartik Chhabra · Mio AI Voice · Q2 FY26–27</p>
+</section>
+</div>
+<div class="chrome">
+  <button id="prev" aria-label="Previous">‹</button>
+  <span class="count"><span id="cur">1</span> / <span id="total">19</span></span>
+  <button id="next" aria-label="Next">›</button>
+</div>
+<div class="hint">← → navigate · F fullscreen · Ctrl+P → PDF</div>
+<script>
+const slides=[...document.querySelectorAll('.slide')];let cur=0;
+document.getElementById('total').textContent=slides.length;
+function show(i){cur=Math.max(0,Math.min(slides.length-1,i));
+  slides.forEach((s,k)=>s.classList.toggle('active',k===cur));
+  document.getElementById('cur').textContent=cur+1;
+  document.getElementById('progress').style.width=((cur+1)/slides.length*100)+'%';}
+document.getElementById('next').onclick=()=>show(cur+1);
+document.getElementById('prev').onclick=()=>show(cur-1);
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){show(cur+1);e.preventDefault();}
+  else if(e.key==='ArrowLeft'||e.key==='PageUp'){show(cur-1);}
+  else if(e.key==='Home'){show(0);}else if(e.key==='End'){show(slides.length-1);}
+  else if(e.key==='f'||e.key==='F'){if(!document.fullscreenElement)document.documentElement.requestFullscreen();else document.exitFullscreen();}
+});
+function fit(){const s=Math.min(window.innerWidth/1280,window.innerHeight/720);
+  document.getElementById('stage').style.transform=`translate(-50%,-50%) scale(${s})`;}
+window.addEventListener('resize',fit);
+fit();show(0);
+document.addEventListener('click',function(e){
+  var btn=e.target.closest?e.target.closest('.ibtn'):null;
+  var info=btn?btn.closest('.info'):null;
+  document.querySelectorAll('.info.open').forEach(function(x){ if(x!==info) x.classList.remove('open'); });
+  if(info){ info.classList.toggle('open'); e.stopPropagation(); }
+});
+
+
+(function(){
+  var RX=/^([+]?)([0-9][0-9,]*(?:\.[0-9]+)?)(%|M|K)?$/;
+  function run(el){
+    var fin=el.getAttribute('data-final');
+    if(fin===null){fin=el.textContent.trim();el.setAttribute('data-final',fin);}
+    var m=fin.match(RX); if(!m){return;}
+    var target=parseFloat(m[2].replace(/,/g,'')), dec=(m[2].split('.')[1]||'').length, comma=m[2].indexOf(',')>-1;
+    var t0=null, dur=1100;
+    function fmt(v){var s=v.toFixed(dec); if(comma){var p=s.split('.');p[0]=p[0].replace(/\B(?=(\d{3})+(?!\d))/g,',');s=p.join('.');} return m[1]+s+(m[3]||'');}
+    function step(ts){ if(!t0)t0=ts; var k=Math.min(1,(ts-t0)/dur); var e=1-Math.pow(1-k,4); el.textContent=fmt(target*e); if(k<1)requestAnimationFrame(step); else el.textContent=fin; }
+    requestAnimationFrame(step);
+  }
+  var base=show;
+  show=function(i){ base(i); if(window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+    var s=document.querySelectorAll('.slide')[cur]; if(!s)return;
+    s.querySelectorAll('.kpi .n, .outcome .big').forEach(run); };
+  show(cur);
+})();
+
+</script>
+</body>
+</html>
