@@ -762,8 +762,9 @@
         <h3><span class="dot"></span>What was done</h3>
         <ul class="clean">
           <li>Moved to <b>GPT-5 mini</b> at the <b>same call cost</b> (agreed with the vendor)</li>
-          <li>With Ops: a better extraction that shows <b>goal achieved call by call</b></li>
-          <li>New agents get it by default; older, high-volume agents are being migrated to the new evaluation prompt</li>
+          <li>With Ops, set up a <b>new way of building the extraction</b> (the part that decides if a lead is qualified and if the goal was achieved). It shows <b>goal achieved call by call</b></li>
+          <li>Since <b>22 Sep 2026</b>, every new agent is built this way</li>
+          <li>Existing clients that still have call volume are being moved to it with Ops, highest volume first</li>
         </ul>
       </div>
     </div>
@@ -771,7 +772,16 @@
       <div class="outcome">
         <div class="lbl">Outcome so far</div>
         <div class="big" style="font-size:40px">Better model, same cost</div>
-        <div class="sub">Rolled out to new agents; migration of existing agents under way with the Ops team.</div>
+        <div class="sub">Since 22 Sep 2026, every new agent follows the new extraction approach. Performance is being monitored, and existing clients that still have call volume are being migrated with the Ops team.</div>
+      </div>
+      <div class="card">
+        <h3><span class="dot" style="background:var(--green)"></span>The new extraction approach</h3>
+        <ul class="clean check">
+          <li><b>Built from the client's RGS:</b> qualification rules come from the client's own requirements and expectations</li>
+          <li><b>Matched to the agent's main prompt:</b> same questions, same eligibility rules, so the result does justice to the conversation</li>
+          <li><b>Client approves it</b> before the agent goes live</li>
+          <li><b>Monitored after go-live</b> for wrong qualification</li>
+        </ul>
       </div>
     </div>
   </div>
