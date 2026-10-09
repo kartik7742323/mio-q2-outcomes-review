@@ -419,12 +419,15 @@
         <div class="kpi"><div class="n">32 → 57</div><div class="l">Actual (Q1 → Q2)</div></div>
         <div class="kpi accent"><div class="n">+78%</div><div class="l">Not met</div></div>
       </div>
-      <div class="card" style="flex:1">
-        <h3><span class="dot"></span>By type <span style="font-size:12px;color:var(--muted);font-weight:600">(grey = Q1 · purple = Q2)</span></h3>
-        <div class="barrow"><div class="lab">Bugs</div><div style="flex:1"><div><span class="bar" style="width:31.914893617021278%;background:#94a3b8"></span> <span class="v">15</span></div><div style="margin-top:3px"><span class="bar" style="width:80.85106382978722%;background:var(--accent)"></span> <span class="v">38</span></div></div></div>
-        <div class="barrow"><div class="lab">How-to</div><div style="flex:1"><div><span class="bar" style="width:10.638297872340425%;background:#94a3b8"></span> <span class="v">5</span></div><div style="margin-top:3px"><span class="bar" style="width:27.659574468085108%;background:var(--accent)"></span> <span class="v">13</span></div></div></div>
-        <div class="barrow"><div class="lab">Feature asks</div><div style="flex:1"><div><span class="bar" style="width:21.27659574468085%;background:#94a3b8"></span> <span class="v">10</span></div><div style="margin-top:3px"><span class="bar" style="width:19.148936170212767%;background:var(--accent)"></span> <span class="v">9</span></div></div></div>
-        <div class="barrow"><div class="lab">Other</div><div style="flex:1"><div><span class="bar" style="width:4.25531914893617%;background:#94a3b8"></span> <span class="v">2</span></div><div style="margin-top:3px"><span class="bar" style="width:6.382978723404255%;background:var(--accent)"></span> <span class="v">3</span></div></div></div>
+      <div class="card" style="flex:1;display:flex;flex-direction:column">
+        <h3><span class="dot"></span>By type, Q2 <span style="font-size:12px;color:var(--muted);font-weight:600">(purple = troubleshooting + product bug: 39 of 57)</span></h3>
+        <div style="flex:1;display:flex;flex-direction:column;justify-content:space-evenly">
+        <div class="barrow"><div class="lab" style="width:150px">Product bug</div><div style="flex:1"><span class="bar" style="width:78.72%;background:var(--accent)"></span> <span class="v">37</span></div></div>
+        <div class="barrow"><div class="lab" style="width:150px">Troubleshooting</div><div style="flex:1"><span class="bar" style="width:4.26%;background:var(--accent)"></span> <span class="v">2</span></div></div>
+        <div class="barrow"><div class="lab" style="width:150px">How-to question</div><div style="flex:1"><span class="bar" style="width:23.40%;background:#94a3b8"></span> <span class="v">11</span></div></div>
+        <div class="barrow"><div class="lab" style="width:150px">New feature request</div><div style="flex:1"><span class="bar" style="width:12.77%;background:#94a3b8"></span> <span class="v">6</span></div></div>
+        <div class="barrow"><div class="lab" style="width:150px">New implementation</div><div style="flex:1"><span class="bar" style="width:2.13%;background:#94a3b8"></span> <span class="v">1</span></div></div>
+        </div>
         <div class="note" style="padding-top:6px"><b>Why Q1 is low:</b> Zoho tracking began in late April, and many Q1 queries came directly by email in parallel. Q2 by month: Jul 13 · Aug 28 · Sep 22. Closed: 61 of 63; the 2 open are not yet due.</div>
       </div>
     </div>
