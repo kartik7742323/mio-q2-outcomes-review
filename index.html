@@ -556,9 +556,13 @@
         <div class="kpi"><div class="n">38.6%</div><div class="l">Connected on the 1st call</div></div>
         <div class="kpi accent"><div class="n">50.5%</div><div class="l">Connect rate with retry</div></div>
       </div>
-      <div class="card" style="flex:1">
+      <div class="card" style="flex:1;display:flex;flex-direction:column">
         <h3><span class="dot"></span>Connect rate, built up call by call <span style="font-size:12px;color:var(--muted);font-weight:600">(% of leads dialled)</span></h3>
         <div class="barrow"><div class="lab" style="width:96px">1st call</div><div style="flex:1"><span class="bar" style="width:78%;background:#94a3b8"></span> <span class="v">38.61%</span></div></div><div class="barrow"><div class="lab" style="width:96px">+ 1st retry</div><div style="flex:1"><span class="bar" style="width:17.5959595959596%;background:var(--accent)"></span> <span class="v">+8.71</span></div></div><div class="barrow"><div class="lab" style="width:96px">+ 2nd retry</div><div style="flex:1"><span class="bar" style="width:5.777777777777778%;background:var(--accent)"></span> <span class="v">+2.86</span></div></div><div class="barrow"><div class="lab" style="width:96px">+ 3rd retry</div><div style="flex:1"><span class="bar" style="width:1.2%;background:var(--accent)"></span> <span class="v">+0.26</span></div></div><div class="barrow"><div class="lab" style="width:96px">+ 4th retry</div><div style="flex:1"><span class="bar" style="width:1.2%;background:var(--accent)"></span> <span class="v">+0.05</span></div></div><div class="barrow"><div class="lab" style="width:96px">+ 5th retry</div><div style="flex:1"><span class="bar" style="width:1.2%;background:var(--accent)"></span> <span class="v">+0.03</span></div></div>
+        <ul class="clean check" style="margin-top:auto;padding-top:12px;border-top:1px solid var(--line)">
+          <li>About <b>1 in 4</b> connected leads (11.9% of the 50.5%) was reached only because of a retry</li>
+          <li>The <b>1st and 2nd retries</b> give almost all of the gain (+11.57% of +11.91%). A 3rd, 4th or 5th retry adds very little</li>
+        </ul>
       </div>
     </div>
     <div class="col">
@@ -568,10 +572,10 @@
         <div style="margin:10px 0 4px;font-size:14px;color:var(--ink)"><b>Campaigns on retry</b> <span style="color:var(--muted)">959 of 1,805</span></div><div><span class="bar" style="width:53.13%;background:var(--accent)"></span> <span class="v">53.13%</span></div>
       </div>
       <div class="card" style="flex:1">
-        <h3><span class="dot" style="background:var(--green)"></span>What it shows</h3>
-        <ul class="clean check">
-          <li>About <b>1 in 4</b> connected leads (11.9% of the 50.5%) was reached only because of a retry</li>
-          <li>The <b>1st and 2nd retries</b> give almost all of the gain (+11.57% of +11.91%). A 3rd, 4th or 5th retry adds very little</li>
+        <h3><span class="dot" style="background:var(--accent-2)"></span>How we will improve it</h3>
+        <ul class="clean">
+          <li><span class="pill tag-amber">In progress</span> <b>Retry in running automations.</b> Every Mio Voice client using AI calling in automation is now enabled for retry. Ops creates a duplicate automation with retry on, confirms with the client (up to 2 days), then turns retry on in the running automation</li>
+          <li><span class="pill">Q3</span> <b>Best calling hours.</b> Suggest the best hours to call from the call connectivity heatmap, and let campaigns run at those hours to get the highest connect rate</li>
         </ul>
       </div>
     </div>
